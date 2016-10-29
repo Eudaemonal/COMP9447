@@ -4,7 +4,7 @@
 #==============================
 Wargame reverse assembly to C
 MIT labs source code
-
+Priviliege escallaction
 
 
 
@@ -15,6 +15,7 @@ MIT labs source code
 
 #==============================
 # Reverse Engineering
+Reverse C code: linked list, pointer, malloc
 
 
 #==============================

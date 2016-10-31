@@ -1,12 +1,13 @@
 
 
-
+# Bring x86 assembly reference
+#
 #==============================
 Wargame reverse assembly to C
 MIT labs source code
 Priviliege escallaction
 
-
+Printf vulnerabilities
 
 #==============================
 # Source Code
@@ -16,6 +17,8 @@ Google Code, Github commit
 #==============================
 # Reverse Engineering
 Reverse C code: linked list, pointer, malloc
+
+
 
 
 #==============================

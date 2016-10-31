@@ -43,9 +43,26 @@ rep repeate the string operation ECX times
 
 http://x86.renejeschke.de/html/file_module_x86_id_279.html
 
+
 #--------------------------------------
+# movzx, movsx
+
+movzx: move an unsigned value into register and zero extend with zero
+movsx: move a signed value into register and sign extend with one
 
 
+#--------------------------------------
+# ja jg
+ja: unsigned value greater
+jg: signed value greater
+
+
+
+
+
+
+#---------------------------------------
+# repne scasb
 
 
 

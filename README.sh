@@ -26,3 +26,22 @@ Reverse C code: linked list, pointer, malloc
 
 
 
+#==============================
+# Sample Exam
+
+# Reverse:
+1 done
+2 ?
+
+
+
+# 
+
+
+
+
+
+
+
+
+

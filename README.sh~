@@ -7,7 +7,7 @@ Wargame reverse assembly to C
 MIT labs source code
 Priviliege escallaction
 
-Printf vulnerabilities
+Printf vulnerabilities, buffer overflow, return to libc
 
 #==============================
 # Source Code
@@ -23,6 +23,24 @@ Reverse C code: linked list, pointer, malloc
 
 #==============================
 # Exploit
+
+
+
+#==============================
+# Sample Exam
+
+# Reverse:
+1 done
+
+
+
+# 
+
+
+
+
+
+
 
 
 

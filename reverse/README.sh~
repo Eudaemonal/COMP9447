@@ -61,7 +61,7 @@ jg: signed value greater
 
 #---------------------------------------
 # repne scasb
-repne: repeat until 
+repne: repeat until zero flag is not set
 scas:  searching a particular character in string, data in:
 
 AL:  scasb
@@ -89,6 +89,13 @@ shl:
 
 sar: 
 shr: 
+
+#---------------------------------------
+# jnb, jnc
+
+jnb: jump when the carry flag is zero
+jnc: alias of jnb
+
 
 
 

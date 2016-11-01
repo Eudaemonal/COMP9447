@@ -90,6 +90,15 @@ shl:
 sar: 
 shr: 
 
+#---------------------------------------
+# jnb, jnc
+
+jnb: jump when the carry flag is zero
+jnc: alias of jnb
+
+
+
+
 
 
 

@@ -96,7 +96,10 @@ shr:
 jnb: jump when the carry flag is zero
 jnc: alias of jnb
 
+#---------------------------------------
+# imul
 
+imul: signed multiply, multiply with EAX
 
 
 

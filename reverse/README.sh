@@ -108,6 +108,17 @@ higher result: 	AH 		DX 		EDX
 lower result: 	AL 		AX 		EAX
 
 
+#---------------------------------------
+# MOV EAX, DWORD PTR DS:[ESI]
+
+ESI = 0x00402050;  /* Set up your initial conditions for_ ESI */
+EAX = *((DWORD *)ESI);   /* mov EAX, DWORD PTR [ESI] */
+
+
+#---------------------------------------
+
+
+
 
 
 

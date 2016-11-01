@@ -100,11 +100,23 @@ jnc: alias of jnb
 # imul
 
 imul: signed multiply, multiply with EAX
+	  result store in EAX
 
 operand size 	1 byte 	2 byte  4 byte
 other operand:	AL 		AX 		EAX
 higher result: 	AH 		DX 		EDX
 lower result: 	AL 		AX 		EAX
+
+
+#---------------------------------------
+# MOV EAX, DWORD PTR DS:[ESI]
+
+ESI = 0x00402050;  /* Set up your initial conditions for_ ESI */
+EAX = *((DWORD *)ESI);   /* mov EAX, DWORD PTR [ESI] */
+
+
+#---------------------------------------
+
 
 
 

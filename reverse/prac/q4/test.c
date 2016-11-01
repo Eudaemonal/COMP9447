@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+
+/*
+Reverse the order of a linked list
+
+*/
+
+
+
+struct list{
+	int elem;
+	*list addr;
+};
+
+
+
+void sub_8048681(list* arg_0){
+	list* a = 0;
+
+
+	list *curr = *arg_0;
+	while(curr!=0){
+		temp = curr->addr;
+		curr->addr = a;
+		a = curr
+
+		curr = temp;
+	}
+
+}
+
+
+	   [1]->[2]->[3]->[4]->NULL
+ 	    2    3    4    0
+
+NULL <-[1]  [2]->[3]->[4]->NULL
+        0    3    4    0  
+
+NULL <-[1]<-[2]  [3]->[4]->NULL
+        0    1    4    0
+
+NULL <-[1]<-[2]<-[3]  [4]->NULL
+        0    1    2    0
+
+NULL <-[1]<-[2]<-[3]<-[4]
+        0    1    2    3
+
+
+
+
+
+

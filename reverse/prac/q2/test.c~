@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+/*
+Input:  char array
+Output: Index of array if found, -1 if not
+*/
+
+
+int sub_8048612(char *arg_0, char arg_4) {
+	int i = 0;
+
+	while(arg_0[i]){
+		if(arg_0[i]==arg_4) return i;
+		i++;
+	}
+	return -1;
+}
+

@@ -1,0 +1,280 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252"><script type="text/javascript" src="source_files/jquery-1.js"></script>
+ <script src="source_files/bootstrap.html"></script>
+ <link href="source_files/bootstrap_002.html" rel="stylesheet" media="screen">
+ <link href="source_files/css.css" rel="stylesheet" type="text/css">
+ <script src="source_files/run_prettify.html"></script>
+
+
+
+<style>
+  body  {background:black;}
+  pre   {color:white; }
+  div   {color:white;}
+  p     {color:white;}
+  a:link {color:white;}      /* unvisited link */
+  a:visited {color:white;}  /* visited link */
+</style>
+</head><body>
+
+<div class="container">
+  <br><br><br><br>
+  <div id="words" style="font-size:500%; font-family: 'Gilda Display', serif;">SOURCE AUDITING</div>
+
+  <div class="row-fluid">
+
+
+
+
+
+
+<br><br><br><br><br>
+
+
+
+
+<p>
+
+Question 1: Find the bug and describe how it might be exploitable. It's non-typical!
+<br><br>
+</p><pre class="prettyprint" style="background:white">// You control the data coming over sockfd
+
+int isUsernameValid(char *user)
+{
+    char *delimiter;
+    int c;
+
+    delimiter = strchr(user, ':');
+
+    if(delimiter)
+    {
+        c = *delimiter;
+        *delimiter = '\0';
+    }
+
+    ...
+
+    *delimiter = c;
+
+    return 1;
+}
+
+int auth(int sockfd)
+{
+    char user[1024], *buf;
+    size_t size;
+    int n, cmd;
+
+    cmd = readInt(sockfd);
+    size = readInt(sockfd);
+
+    if(size &gt; MAX_PACKET)
+        return -1;
+
+    buf = (char *)calloc(size+1, sizeof(char));
+
+    if(!buf)
+        return -1;
+
+    readString(buf, size);
+
+    switch(cmd){
+        case USERNAME:
+            strncpy(user, buf, sizeof(user));
+            if(!isUsernameValid(user))
+                goto fail;
+            break;
+        ...
+    }
+}
+
+ </pre>
+
+<p></p>
+
+
+<p>
+<br><br><br><br>
+Question 2: Find the bug and describe how it might be exploitable.
+<br><br>
+</p><pre class="prettyprint" style="background:white">// You control the data coming over sockfd
+
+char *readUsername(int sockfd)
+{
+    char *buf, *s, username[1024];
+    int i;
+
+    buf = (char *) malloc(1024);
+
+    if(!buf)
+    {
+        error("buf allocation failed: %m");
+        return NULL;
+    }
+
+    if(read(sockfd, username, sizeof(username)-1) &lt;= 0)
+    {
+        free(buf);
+        error("read failure: %m");
+        return NULL;
+    }
+
+    username[sizeof(username)-1] = '\0';
+
+    s = strchr(username, ':');
+    
+    if(s)
+    {
+        *s++ = '\0';
+    }
+
+    sprintf(buf, "username=%.32s", username);
+
+    if(s)
+    {
+        snprintf(buf, sizeof(buf)-strlen(buf)-1, ", style=%s\n", s);
+    }
+
+    return buf;
+}
+
+</pre>
+
+<p></p>
+
+
+<p>
+	<br><br><br><br>
+Question 3: Find the bug and explain how to trigger it.
+<br><br>
+</p><pre class="prettyprint" style="background:white">static JabberID*
+jabber_id_new_internal(const char *str, gboolean allow_terminating_slash)
+{
+	const char *at = NULL;
+	const char *slash = NULL;
+	const char *c;
+	gboolean needs_validation = FALSE;
+#ifndef USE_IDN
+	char *node = NULL;
+	char *domain;
+#endif
+	JabberID *jid;
+
+	if (!str)
+		return NULL;
+
+	for (c = str; *c != '\0'; c++)
+	{
+		switch (*c) {
+			case '@':
+				if (at) {
+					/* Multiple @'s in the node/domain portion, not a valid JID! */
+					return NULL;
+				}
+				if (c == str) {
+					/* JIDs cannot start with @ */
+					return NULL;
+				}
+				if (c[1] == '\0') {
+					/* JIDs cannot end with @ */
+					return NULL;
+				}
+				at = c;
+			
+				break;
+
+			case '/':
+				if (!slash) {
+					if (c == str) {
+						/* JIDs cannot start with / */
+						return NULL;
+					}
+					if (c[1] == '\0' &amp;&amp; !allow_terminating_slash) {
+						/* JIDs cannot end with / */
+						return NULL;
+					}
+					slash = c;
+				}
+				break;
+
+			default:
+				/* characters allowed everywhere */
+				if ((*c &gt;= 'a' &amp;&amp; *c &lt;= 'z')
+						|| (*c &gt;= '0' &amp;&amp; *c &lt;= '9')
+						|| (*c &gt;= 'A' &amp;&amp; *c &lt;= 'Z')
+						|| *c == '.' || *c == '-')
+					/* We're good */
+					break;
+
+				/*
+				 * Hmm, this character is a bit more exotic.  Better fall
+				 * back to using the more expensive UTF-8 compliant
+				 * stringprep functions.
+				 */
+				needs_validation = TRUE;
+				break;
+		}
+	}
+
+	if (!needs_validation) {
+		/* JID is made of only ASCII characters--just lowercase and return */
+		jid = g_new0(JabberID, 1);
+
+		if (at) {
+			jid-&gt;node = g_ascii_strdown(str, at - str);
+			if (slash) {
+				jid-&gt;domain = g_ascii_strdown(at + 1, slash - (at + 1));
+				if (*(slash + 1))
+					jid-&gt;resource = g_strdup(slash + 1);
+			} else {
+				jid-&gt;domain = g_ascii_strdown(at + 1, -1);
+			}
+		} else {
+			if (slash) {
+				jid-&gt;domain = g_ascii_strdown(str, slash - str);
+				if (*(slash + 1))
+					jid-&gt;resource = g_strdup(slash + 1);
+			} else {
+				jid-&gt;domain = g_ascii_strdown(str, -1);
+			}
+		}
+		return jid;
+	}
+
+	/*
+	 * If we get here, there are some non-ASCII chars in the string, so
+	 * we'll need to validate it, normalize, and finally do a full jabber
+	 * nodeprep on the jid.
+	 */
+
+	if (!g_utf8_validate(str, -1, NULL))
+		return NULL;
+
+#ifdef USE_IDN
+	return jabber_idn_validate(str, at, slash, c /* points to the null */);
+#else /* USE_IDN */
+
+	…removed for the exam…
+
+#endif /* USE_IDN */
+}
+</pre>
+
+<p></p>
+
+<p>
+	<br><br><br><b>
+
+Bonus question: create the smallest valid program that crashes when you 
+run it, that compiles with -Wall -Werror. Whoever has the smallest 
+program gets a mark, potentially shared across multiple people.
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+</b>
+</p></div>
+
+
+
+</div></body></html>

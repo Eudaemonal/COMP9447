@@ -57,12 +57,27 @@ ja: unsigned value greater
 jg: signed value greater
 
 
-
-
-
-
 #---------------------------------------
 # repne scasb
+
+scas: searching a particular character in string, data in:
+
+AL:  scasb
+AX:  scasw
+EAX: scasd
+
+string in:
+EDI
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,11 @@
 #include <stdio.h>
 
+
+/*
+ write a string arguemnt into banner.txt
+*/
+
+
 int readBanner(char *s){
 
 	FILE *stream;

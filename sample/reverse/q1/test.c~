@@ -1,5 +1,11 @@
 #include <stdio.h>
 
+
+/*
+ write a string into banner.txt
+*/
+
+
 int readBanner(char *s){
 
 	FILE *stream;
@@ -12,6 +18,8 @@ int readBanner(char *s){
 	fclose(stream);
 	return;
 }
+
+
 
 
 //========================================

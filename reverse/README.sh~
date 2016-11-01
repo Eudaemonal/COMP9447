@@ -2,6 +2,8 @@
 # Reverse Engineering
 #
 #======================================
+# https://courses.engr.illinois.edu/ece390/books/artofasm/CH06/CH06-3.html#HEADING3-82
+#
 #--------------------------------------
 # Registers
 
@@ -59,8 +61,8 @@ jg: signed value greater
 
 #---------------------------------------
 # repne scasb
-
-scas: searching a particular character in string, data in:
+repne: repeat until 
+scas:  searching a particular character in string, data in:
 
 AL:  scasb
 AX:  scasw
@@ -70,12 +72,23 @@ string in:
 EDI
 
 
+#---------------------------------------
+# leave, enter
 
+enter:  push  ebp
+		mov   ebp, esp
 
+leave:  mov   esp, ebp
+		pop   ebp
 
+#---------------------------------------
+# sal, shl, sar, shr
 
+sal: shift left,   MSB => Carry, LSB => 0
+shl: 
 
-
+sar: 
+shr: 
 
 
 

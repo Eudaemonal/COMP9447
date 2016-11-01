@@ -31,7 +31,7 @@ void sub_4012D0(int arg_0) {
 			c = Memory + var_10
 			d = arg_0 + var8;
 			a = d;
-			Memory = arg_0
+			Memory = arg_0;
 			var_10 ++;
 		}
 	}while(Size==var_8)

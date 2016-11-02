@@ -22,7 +22,11 @@ SF 		7 	Sign 			Most significant bit of result is 1
 OF 		11 	Overflow 		Overflow on signed operation  	  	 
 DF 		10 	Direction 		Direction string instructions operate (inc or dec)
 ID 		21 	Identification 	Changeability denotes presence of CPUID instruction
+#--------------------------------------
+# Offset of EBP
 
+argument: positive (pushed before callee called)
+variable: negative (reserved space after call )
 
 #--------------------------------------
 # Hex value

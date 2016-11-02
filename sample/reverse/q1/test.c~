@@ -2,7 +2,7 @@
 
 
 /*
- write a string into banner.txt
+ write a string arguemnt into banner.txt
 */
 
 
@@ -12,7 +12,8 @@ int readBanner(char *s){
 	stream = fopen("banner.txt", "wb");
 	
 	if(stream==NULL) exit(0);
-	
+
+	s[20] = 0;
 	fputs(s, stream);
 
 	fclose(stream);

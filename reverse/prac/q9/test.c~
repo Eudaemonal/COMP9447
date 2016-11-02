@@ -1,6 +1,10 @@
 #include <stdio.h>
 
 
+
+/**/
+
+
 void sub_401190(char *arg_0){
 	int i;
 
@@ -12,7 +16,7 @@ void sub_401190(char *arg_0){
 	int i=0;
 	do{
 		i++
-	while(arg_0[i]!=0)		//get the length of arg_0
+	}while(arg_0[i]!=0)		//get the length of arg_0
 	i = i- 1
 	*/
 	

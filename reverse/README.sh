@@ -106,7 +106,7 @@ jnc: alias of jnb
 imul: signed multiply, multiply with EAX
 	  result store in EAX
 
-operand size 	1 byte 	2 byte  4 byte
+operand size: 	1 byte 	2 byte  4 byte
 other operand:	AL 		AX 		EAX
 higher result: 	AH 		DX 		EDX
 lower result: 	AL 		AX 		EAX

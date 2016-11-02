@@ -12,11 +12,12 @@ int readBanner(char *s){
 	stream = fopen("banner.txt", "wb");
 	
 	if(stream==NULL) exit(0);
-	
+
+	s[20] = 0;
 	fputs(s, stream);
 
-	fclose(stream);
-	return;
+	return fclose(stream);
+	
 }
 
 

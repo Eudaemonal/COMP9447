@@ -29,7 +29,7 @@ int auth(int sockfd)
     cmd = readInt(sockfd);
     size = readInt(sockfd);
 
-    if(size > MAX_PACKET)
+    if(size > MAX_PACKET)				//# size can be negative
         return -1;
 
     buf = (char *)calloc(size+1, sizeof(char));

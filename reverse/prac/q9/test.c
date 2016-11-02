@@ -1,6 +1,12 @@
 #include <stdio.h>
 
 
+
+/*
+Finding " and change it to \"
+*/
+
+
 void sub_401190(char *arg_0){
 	int i;
 

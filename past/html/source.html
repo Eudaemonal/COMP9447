@@ -1,0 +1,272 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252"><script src="source_files/bootstrap.js"></script>
+ <link href="source_files/bootstrap.css" rel="stylesheet" media="screen">
+ <link href="source_files/css.css" rel="stylesheet" type="text/css">
+ <link rel="stylesheet" type="text/css" href="source_files/prettify.css">
+
+
+
+
+<style>
+  body  {background:black;}
+  pre   {color:white; }
+  div   {color:white;}
+  p     {color:white;}
+  a:link {color:white;}      /* unvisited link */
+  a:visited {color:white;}  /* visited link */
+</style>
+</head><body>
+
+<div class="container">
+  <br><br><br><br>
+  <div id="words" style="font-size:500%; font-family: 'Gilda Display', serif;">SOURCE AUDITING</div>
+
+  <div class="row-fluid">
+
+
+
+
+
+
+<br><br><br><br><br>
+
+
+
+<p>
+</p><h4>For each question below, identify and describe the bug/bugs in the code. Explain why it is an issue and how to trigger it.</h4>
+<p></p>
+<p>
+
+Question 1.
+</p><pre class="prettyprint prettyprinted" style="background: white none repeat scroll 0% 0%;"><span class="kwd">struct</span><span class="pln"> hdr </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">unsigned</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> x</span><span class="pun">;</span><span class="pln">
+        </span><span class="kwd">unsigned</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> y</span><span class="pun">;</span><span class="pln">
+        </span><span class="kwd">unsigned</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> z</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">};</span><span class="pln">
+
+
+</span><span class="kwd">struct</span><span class="pln"> hdr </span><span class="pun">*</span><span class="pln">
+fill_struct</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> a</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> b</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> c</span><span class="pun">)</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">struct</span><span class="pln"> hdr </span><span class="pun">*</span><span class="pln"> s </span><span class="pun">=</span><span class="pln"> malloc</span><span class="pun">(</span><span class="kwd">sizeof</span><span class="pun">(</span><span class="kwd">struct</span><span class="pln"> hdr</span><span class="pun">));</span><span class="pln">
+
+        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">s </span><span class="pun">==</span><span class="pln"> NULL</span><span class="pun">)</span><span class="pln">
+        </span><span class="pun">{</span><span class="pln">
+                printf</span><span class="pun">(</span><span class="str">"winners check return values\n"</span><span class="pun">);</span><span class="pln">
+                </span><span class="kwd">exit</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+
+        s</span><span class="pun">-&gt;</span><span class="pln">x </span><span class="pun">=</span><span class="pln"> a</span><span class="pun">;</span><span class="pln">
+        s</span><span class="pun">-&gt;</span><span class="pln">y </span><span class="pun">=</span><span class="pln"> b</span><span class="pun">;</span><span class="pln">
+        s</span><span class="pun">-&gt;</span><span class="pln">z </span><span class="pun">=</span><span class="pln"> c</span><span class="pun">;</span><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> s</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+ </span></pre>
+
+<p></p>
+
+
+<p>
+<br><br><br><br>
+Question 2: For this example, assume that "password.txt" exists and is readable, and contains
+an ASCII password. We do not control password.txt, however we do however control
+standard input.
+</p><pre class="prettyprint prettyprinted" style="background: white none repeat scroll 0% 0%;"><span class="com">/* acme sudo */</span><span class="pln">
+
+</span><span class="com">#include</span><span class="pln"> </span><stdio.h><span class="pln">
+</span><span class="com">#include</span><span class="pln"> </span><string.h><span class="pln">
+
+</span><span class="kwd">int</span><span class="pln"> main</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> argc</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> </span><span class="pun">*</span><span class="pln">argv</span><span class="pun">[],</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> </span><span class="pun">*</span><span class="pln">env</span><span class="pun">[])</span><span class="pln"> 
+</span><span class="pun">{</span><span class="pln">
+	</span><span class="kwd">char</span><span class="pln"> password</span><span class="pun">[</span><span class="lit">128</span><span class="pun">];</span><span class="pln">
+	</span><span class="kwd">char</span><span class="pln"> guess</span><span class="pun">[</span><span class="lit">128</span><span class="pun">];</span><span class="pln">
+
+	</span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">argc </span><span class="pun">&lt;</span><span class="pln"> </span><span class="lit">2</span><span class="pun">)</span><span class="pln"> 
+	</span><span class="pun">{</span><span class="pln">
+		</span><span class="kwd">return</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+
+	FILE </span><span class="pun">*</span><span class="pln">fp </span><span class="pun">=</span><span class="pln"> fopen</span><span class="pun">(</span><span class="str">"password.txt"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"r"</span><span class="pun">);</span><span class="pln">
+	fgets</span><span class="pun">(</span><span class="pln">password</span><span class="pun">,</span><span class="pln"> </span><span class="lit">128</span><span class="pun">,</span><span class="pln"> fp</span><span class="pun">);</span><span class="pln">
+	</span><span class="pun">*</span><span class="pln">strchr</span><span class="pun">(</span><span class="pln">password</span><span class="pun">,</span><span class="pln"> </span><span class="str">'\n'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">'\0'</span><span class="pun">;</span><span class="pln">
+	fclose</span><span class="pun">(</span><span class="pln">fp</span><span class="pun">);</span><span class="pln">
+
+	fgets</span><span class="pun">(</span><span class="pln">guess</span><span class="pun">,</span><span class="pln"> </span><span class="lit">128</span><span class="pun">,</span><span class="pln"> stdin</span><span class="pun">);</span><span class="pln">
+	</span><span class="pun">*</span><span class="pln">strchr</span><span class="pun">(</span><span class="pln">guess</span><span class="pun">,</span><span class="pln"> </span><span class="str">'\n'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">'\0'</span><span class="pun">;</span><span class="pln">
+
+	</span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">strcmp</span><span class="pun">(</span><span class="pln">password</span><span class="pun">,</span><span class="pln"> guess</span><span class="pun">)</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"> 
+	</span><span class="pun">{</span><span class="pln">
+		execve</span><span class="pun">(</span><span class="pln">argv</span><span class="pun">[</span><span class="lit">1</span><span class="pun">],</span><span class="pln"> argv </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln"> env</span><span class="pun">);</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span></string.h></stdio.h></pre>
+
+<p></p>
+
+
+<p>
+	<br><br><br><br>
+Question 3: For this example, the function "read_all" is assumed to 
+simply read all data from the related socket file descriptor, into the 
+second argument, with a maximum read length of the third argument. We 
+control what comes in from the network.
+</p>
+<pre class="prettyprint prettyprinted" style="background: white none repeat scroll 0% 0%;"><span class="kwd">struct</span><span class="pln"> hdr </span><span class="pun">{</span><span class="pln">
+	</span><span class="kwd">unsigned</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> l</span><span class="pun">;</span><span class="pln">
+	</span><span class="kwd">unsigned</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> type</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">};</span><span class="pln">
+
+</span><span class="kwd">char</span><span class="pln"> 
+</span><span class="pun">*</span><span class="pln">read_packet</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> sockfd</span><span class="pun">)</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+	</span><span class="kwd">int</span><span class="pln"> n</span><span class="pun">;</span><span class="pln">
+	</span><span class="kwd">unsigned</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> l</span><span class="pun">;</span><span class="pln">
+	</span><span class="kwd">struct</span><span class="pln"> hdr smp_hdr</span><span class="pun">;</span><span class="pln">
+	</span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> buf</span><span class="pun">[</span><span class="lit">1024</span><span class="pun">];</span><span class="pln">
+	
+	</span><span class="kwd">if</span><span class="pun">(</span><span class="pln">read_all</span><span class="pun">(</span><span class="pln">sockfd</span><span class="pun">,</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">void</span><span class="pln"> </span><span class="pun">*)&amp;</span><span class="pln">smp_hdr</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">sizeof</span><span class="pun">(</span><span class="pln">smp_hdr</span><span class="pun">))&lt;=</span><span class="lit">0</span><span class="pun">){</span><span class="pln">
+		error</span><span class="pun">(</span><span class="str">"Error 0: %m"</span><span class="pun">);</span><span class="pln">
+		</span><span class="kwd">return</span><span class="pln"> NULL</span><span class="pun">;</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+
+	l </span><span class="pun">=</span><span class="pln"> ntohl</span><span class="pun">(</span><span class="pln">smp_hdr</span><span class="pun">.</span><span class="pln">l</span><span class="pun">);</span><span class="pln">
+	</span><span class="kwd">if</span><span class="pun">(</span><span class="pln">l </span><span class="pun">&gt;</span><span class="pln"> </span><span class="pun">(</span><span class="lit">1024</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="kwd">sizeof</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">struct</span><span class="pln"> hdr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">-</span><span class="pln"> </span><span class="lit">1</span><span class="pun">)){</span><span class="pln">
+		error</span><span class="pun">(</span><span class="str">"Error 1.\n"</span><span class="pun">);</span><span class="pln">
+		</span><span class="kwd">return</span><span class="pln"> NULL</span><span class="pun">;</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+	
+	</span><span class="kwd">if</span><span class="pun">(</span><span class="pln">read_all</span><span class="pun">(</span><span class="pln">sockfd</span><span class="pun">,</span><span class="pln"> buf</span><span class="pun">,</span><span class="pln"> l </span><span class="pun">-</span><span class="pln"> </span><span class="kwd">sizeof</span><span class="pun">(</span><span class="kwd">struct</span><span class="pln"> hdr</span><span class="pun">))&lt;=</span><span class="lit">0</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+		error</span><span class="pun">(</span><span class="str">"Error 2: %m"</span><span class="pun">);</span><span class="pln">
+		</span><span class="kwd">return</span><span class="pln"> NULL</span><span class="pun">;</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+
+	buf</span><span class="pun">[</span><span class="kwd">sizeof</span><span class="pun">(</span><span class="pln">buf</span><span class="pun">)-</span><span class="lit">1</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">'\0'</span><span class="pun">;</span><span class="pln">
+	</span><span class="kwd">return</span><span class="pln"> strdup</span><span class="pun">(</span><span class="pln">buf</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+	<br><br><br>
+<p>
+Question 4: In this question, we control the command line arguments. Find the bug
+</p>
+<pre class="prettyprint prettyprinted" style="background: white none repeat scroll 0% 0%;"><span class="pln">
+</span><span class="com">#define</span><span class="pln"> HEIGHT </span><span class="lit">1000</span><span class="pln">
+</span><span class="com">#include</span><span class="pln"> </span><stdio.h><span class="pln">
+</span><span class="com">#include</span><span class="pln"> </span><stdlib.h><span class="pln">
+
+</span><span class="kwd">struct</span><span class="pln"> node </span><span class="pun">{</span><span class="pln">
+   </span><span class="kwd">int</span><span class="pln"> array</span><span class="pun">[</span><span class="pln">HEIGHT</span><span class="pun">];</span><span class="pln">
+   </span><span class="kwd">int</span><span class="pln"> top</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">};</span><span class="pln">
+
+</span><span class="typ">Staque</span><span class="pln"> create</span><span class="pun">(</span><span class="kwd">void</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   </span><span class="typ">Staque</span><span class="pln"> st</span><span class="pun">;</span><span class="pln">
+   st </span><span class="pun">=</span><span class="pln"> malloc</span><span class="pun">(</span><span class="kwd">sizeof</span><span class="pun">(</span><span class="kwd">struct</span><span class="pln"> node</span><span class="pun">));</span><span class="pln">
+   </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">st </span><span class="pun">==</span><span class="pln"> NULL</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      fprintf </span><span class="pun">(</span><span class="pln">stderr</span><span class="pun">,</span><span class="pln"> </span><span class="str">"create: no memory, aborting\n"</span><span class="pun">);</span><span class="pln">
+      </span><span class="kwd">exit</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   st</span><span class="pun">-&gt;</span><span class="pln">top </span><span class="pun">=</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+   </span><span class="kwd">return</span><span class="pln"> st</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">void</span><span class="pln"> push</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Staque</span><span class="pln"> st</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">st </span><span class="pun">==</span><span class="pln"> NULL</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      fprintf</span><span class="pun">(</span><span class="pln">stderr</span><span class="pun">,</span><span class="pln"> </span><span class="str">"push: staque not initialised\n"</span><span class="pun">);</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pun">;</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">st</span><span class="pun">-&gt;</span><span class="pln">top </span><span class="pun">==</span><span class="pln"> HEIGHT</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      fprintf</span><span class="pun">(</span><span class="pln">stderr</span><span class="pun">,</span><span class="pln"> </span><span class="str">"push: staque overflow\n"</span><span class="pun">);</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pun">;</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   </span><span class="pun">++</span><span class="pln">st</span><span class="pun">-&gt;</span><span class="pln">top</span><span class="pun">;</span><span class="pln">
+   st</span><span class="pun">-&gt;</span><span class="pln">array</span><span class="pun">[</span><span class="pln">st</span><span class="pun">-&gt;</span><span class="pln">top</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+   </span><span class="kwd">return</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">int</span><span class="pln"> pop</span><span class="pun">(</span><span class="typ">Staque</span><span class="pln"> st</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">st </span><span class="pun">==</span><span class="pln"> NULL</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      fprintf</span><span class="pun">(</span><span class="pln">stderr</span><span class="pun">,</span><span class="pln"> </span><span class="str">"pop: staque not initialised\n"</span><span class="pun">);</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">isEmpty</span><span class="pun">(</span><span class="pln">st</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      fprintf</span><span class="pun">(</span><span class="pln">stderr</span><span class="pun">,</span><span class="pln"> </span><span class="str">"pop: staque underflow\n"</span><span class="pun">);</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   </span><span class="kwd">int</span><span class="pln"> topdata </span><span class="pun">=</span><span class="pln"> st</span><span class="pun">-&gt;</span><span class="pln">array</span><span class="pun">[</span><span class="pln">st</span><span class="pun">-&gt;</span><span class="pln">top</span><span class="pun">];</span><span class="pln">
+   </span><span class="pun">--</span><span class="pln">st</span><span class="pun">-&gt;</span><span class="pln">top</span><span class="pun">;</span><span class="pln">
+   </span><span class="kwd">return</span><span class="pln"> topdata</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">void</span><span class="pln"> makeEmpty</span><span class="pun">(</span><span class="typ">Staque</span><span class="pln"> st</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">st </span><span class="pun">==</span><span class="pln"> NULL</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      fprintf</span><span class="pun">(</span><span class="pln">stderr</span><span class="pun">,</span><span class="pln"> </span><span class="str">"makeEmpty: staque not initialised\n"</span><span class="pun">);</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pun">;</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">st</span><span class="pun">-&gt;</span><span class="pln">top </span><span class="pun">&lt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      fprintf</span><span class="pun">(</span><span class="pln">stderr</span><span class="pun">,</span><span class="pln"> </span><span class="str">"makeEmpty: staque not initialised"</span><span class="pun">);</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">isEmpty</span><span class="pun">(</span><span class="pln">st</span><span class="pun">))</span><span class="pln">
+         pop</span><span class="pun">(</span><span class="pln">st</span><span class="pun">);</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">int</span><span class="pln"> isEmpty</span><span class="pun">(</span><span class="typ">Staque</span><span class="pln"> st</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   </span><span class="kwd">int</span><span class="pln"> empty </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+   </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">st </span><span class="pun">==</span><span class="pln"> NULL</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      fprintf</span><span class="pun">(</span><span class="pln">stderr</span><span class="pun">,</span><span class="pln"> </span><span class="str">"isEmpty: staque not initialised\n"</span><span class="pun">);</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      empty </span><span class="pun">=</span><span class="pln"> st</span><span class="pun">-&gt;</span><span class="pln">top </span><span class="pun">&lt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   </span><span class="kwd">return</span><span class="pln"> empty</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">void</span><span class="pln"> show</span><span class="pun">(</span><span class="typ">Staque</span><span class="pln"> st</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">st </span><span class="pun">==</span><span class="pln"> NULL</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      fprintf</span><span class="pun">(</span><span class="pln">stderr</span><span class="pun">,</span><span class="pln"> </span><span class="str">"show: staque not initialised\n"</span><span class="pun">);</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pun">;</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   printf</span><span class="pun">(</span><span class="str">"Staque: "</span><span class="pun">);</span><span class="pln">
+   </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">st</span><span class="pun">-&gt;</span><span class="pln">top </span><span class="pun">&lt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      printf</span><span class="pun">(</span><span class="str">"[ ]\n"</span><span class="pun">);</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">int</span><span class="pln"> i</span><span class="pun">;</span><span class="pln">
+      putchar</span><span class="pun">(</span><span class="str">'['</span><span class="pun">);</span><span class="pln">                    </span><span class="com">// start with a [</span><span class="pln">
+      </span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="pln">i </span><span class="pun">=</span><span class="pln"> st</span><span class="pun">-&gt;</span><span class="pln">top</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> </span><span class="pun">--</span><span class="pln">i</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+         printf</span><span class="pun">(</span><span class="str">"%d, "</span><span class="pun">,</span><span class="pln"> st</span><span class="pun">-&gt;</span><span class="pln">array</span><span class="pun">[</span><span class="pln">i</span><span class="pun">]);</span><span class="pln"> </span><span class="com">// print each element</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+      printf</span><span class="pun">(</span><span class="str">"%d]\n"</span><span class="pun">,</span><span class="pln"> st</span><span class="pun">-&gt;</span><span class="pln">array</span><span class="pun">[</span><span class="lit">0</span><span class="pun">]);</span><span class="pln">   </span><span class="com">// last element includes a ]</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+   </span><span class="kwd">return</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">int</span><span class="pln"> main</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> argc</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> </span><span class="pun">*</span><span class="pln">argv</span><span class="pun">[])</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="typ">Staque</span><span class="pln"> S </span><span class="pun">=</span><span class="pln"> NULL</span><span class="pun">;</span><span class="pln">
+
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">argc </span><span class="pun">&gt;=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+     S </span><span class="pun">=</span><span class="pln"> create</span><span class="pun">();</span><span class="pln">
+	 </span><span class="kwd">int</span><span class="pln"> i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+	 </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="pln">argv</span><span class="pun">[</span><span class="pln">i</span><span class="pun">])</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+		 push</span><span class="pun">(</span><span class="pln">atoi</span><span class="pun">(</span><span class="pln">argv</span><span class="pun">[</span><span class="pln">i</span><span class="pun">++]),</span><span class="pln"> S</span><span class="pun">);</span><span class="pln">
+	 </span><span class="pun">}</span><span class="pln">
+     </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">isEmpty</span><span class="pun">(</span><span class="pln">S</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        printf</span><span class="pun">(</span><span class="str">"%d\n"</span><span class="pun">,</span><span class="pln"> pop</span><span class="pun">(</span><span class="pln">S</span><span class="pun">));</span><span class="pln">
+     </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> EXIT_SUCCESS</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span></stdlib.h></stdio.h></pre>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
+</div>
+
+
+
+
+</div></body></html>

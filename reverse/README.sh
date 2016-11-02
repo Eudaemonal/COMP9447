@@ -116,8 +116,12 @@ EAX = *((DWORD *)ESI);   /* mov EAX, DWORD PTR [ESI] */
 
 
 #---------------------------------------
+# cmova, cmove, cmovb, comvg, comvl
 
+conditional move if above, equal, below, below, greater, less_
 
+#---------------------------------------
+# 
 
 
 

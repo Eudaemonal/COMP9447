@@ -2,7 +2,9 @@
 
 
 
-/**/
+/*
+Finding " and change it to \"
+*/
 
 
 void sub_401190(char *arg_0){
@@ -58,4 +60,68 @@ void sub_401190(char *arg_0){
 	}
 
 }
+
+//
+
+
+char *escapeDoubleQuotes(char *str) {
+
+
+  char *endPtr = str;
+  char *startPtr = str+1;
+  char ch;
+  int  i;
+
+
+  do {
+    ch = *endPtr;
+    endPtr++;
+  } while (ch!= '\0')
+
+
+  int maxIndex = (int)endPtr - (int)startPtr;
+  int numQuotes = 0;
+  if (maxIndex == 0) { return NULL; }
+
+
+  for (i = 0; i < maxIndex; i++) {
+    if (str[i] == '"') { numQuotes++; }
+  }
+
+
+  int newStrLength = maxIndex + numQuotes + 1;
+  char *newString = malloc(newStrLength);
+  if (newString == NULL) { return NULL; }
+
+
+  char *strPtr = newString;
+  for (i = 0; i < maxIndex; i++) {
+    ch = str[i];
+
+
+    if (ch == '"') {
+      *strPtr = '\\';
+      strPrt++;
+    }
+
+
+    *strPtr = ch;
+    strPtr++;
+  }
+
+
+  newString[i] = '\0';
+  return newString;
+}
+
+
+
+
+
+
+
+
+
+
+
 

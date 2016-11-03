@@ -27,6 +27,24 @@ Reverse engineering 9447_stuff
 
 
 #==============================
+# Tips
+
+#------------------------------print
+python -c "print 'A'*30"
+printf "AAAAAAAAAAA"
+
+
+#------------------------------STDIN
+cat filename - | nc localhost 5000
+
+
+
+
+
+
+
+#==============================
+
 # Sample Exam
 
 # Reverse:

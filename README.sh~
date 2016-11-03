@@ -18,7 +18,7 @@ Google Code, Github commit
 # Reverse Engineering
 Reverse C code: linked list, pointer, malloc
 
-Reverse engineering
+Reverse engineering 9447_stuff
 
 
 #==============================
@@ -27,6 +27,24 @@ Reverse engineering
 
 
 #==============================
+# Tips
+
+#------------------------------print
+python -c "print 'A'*30"
+printf "AAAAAAAAAAA"
+
+
+#------------------------------STDIN
+cat filename - | nc localhost 5000
+
+
+
+
+
+
+
+#==============================
+
 # Sample Exam
 
 # Reverse:

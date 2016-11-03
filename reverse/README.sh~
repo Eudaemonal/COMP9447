@@ -125,7 +125,10 @@ EAX = *((DWORD *)ESI);   /* mov EAX, DWORD PTR [ESI] */
 conditional move if above, equal, below, below, greater, less_
 
 #---------------------------------------
-# 
+# div
+
+AX = AX / source
+DX = AX % source
 
 
 

@@ -1,6 +1,8 @@
-
-
+# Notice:
+#
 # Bring x86 assembly reference
+# Review past success exploit
+# Tips print
 #
 #==============================
 Wargame reverse assembly to C
@@ -29,7 +31,7 @@ Reverse engineering 9447_stuff
 #==============================
 # Tips
 #------------------------------CONFIGURE
-
+cat /proc/sys/kernel/randomize_va_space
 sudo sysctl -w kernel.randomize_va_space=0				#ASLR
 
 gcc -fno-stack-protector -o test test.c					#Stack protector
@@ -59,7 +61,6 @@ python -c "print 'A'*256 + 'B'*4 + 'C'*4+'D'*4 +'E'*4 +'F'*4"|sed s/\\n// >temp
 
 #------------------------------STDIN
 cat filename - | nc localhost 5000
-
 
 
 

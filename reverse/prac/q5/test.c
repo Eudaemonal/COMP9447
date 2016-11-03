@@ -6,7 +6,7 @@ void sub_804869B(int arg_0, char *arg_4){
 
 	di = arg_4;
 	dx = arg_0;
-	s = arg_4[-1]
+	s = arg_4 - 1;
 
 	while(var_10 < 0){
 		s = *(a+1)

